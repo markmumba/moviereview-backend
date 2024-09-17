@@ -2,7 +2,7 @@ spring:
   application:
     name: moviereview
   datasource:
-    url:  ${DATABASE_URL}
+    url: ${DATABASE_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver

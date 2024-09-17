@@ -16,9 +16,13 @@ import java.util.List;
 public class Movie extends BaseEntity {
 
     private String title;
+
     private LocalDateTime releasedate;
+
     private String director;
+
     private String synopsis;
+
     private String posterurl;
 
     @ManyToMany
@@ -33,6 +37,6 @@ public class Movie extends BaseEntity {
     )
     private List<Genre> genres;
 
-    @OneToMany(mappedBy = "movie")
-    private List<Review> reveiews;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 }
