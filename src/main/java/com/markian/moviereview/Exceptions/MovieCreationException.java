@@ -2,7 +2,7 @@ package com.markian.moviereview.Exceptions;
 
 
 public class MovieCreationException extends RuntimeException {
-    public MovieCreationException(String message, Throwable cause) {
+    public MovieCreationException(String message) {
         super(message, cause);
     }
 }

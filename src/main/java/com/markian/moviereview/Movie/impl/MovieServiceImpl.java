@@ -43,13 +43,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieResponseDto createMovie(MovieDto movieDto) throws MovieCreationException {
-        Movie movie = movieMapper.fromDtoToMovie(movieDto);
-        try {
-            return movieMapper.fromMovieToDto(movieRepository.save(movie));
-        } catch (DataIntegrityViolationException e) {
-            throw new MovieCreationException("Error creating movie" + e.getMessage(), e);
+    public MovieResponseDto createMovie(MovieDto movieDto) {
+
+        if (movieRepository.existsByTitle(movieDto.title())) {
+            throw new MovieCreationException("A movie with the title " + movieDto.title() + " already exists.");
         }
+
+        Movie movie = movieMapper.fromDtoToMovie(movieDto);
+        return movieMapper.fromMovieToDto(movieRepository.save(movie));
     }
 
     @Transactional

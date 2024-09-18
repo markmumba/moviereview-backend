@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(MovieCreationException.class)
     public ResponseEntity<String> handleMovieCreationException(MovieCreationException ex) {
+        System.out.println("Ni hii imetriggeriwa");
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
