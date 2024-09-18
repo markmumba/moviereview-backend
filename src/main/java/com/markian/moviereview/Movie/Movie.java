@@ -27,6 +27,7 @@ public class Movie extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
+
             name = "movie_genre",
             joinColumns = {
                     @JoinColumn(name = "movie_id")
