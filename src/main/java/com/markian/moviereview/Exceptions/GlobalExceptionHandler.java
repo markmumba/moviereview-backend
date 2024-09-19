@@ -20,7 +20,6 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(MovieCreationException.class)
     public ResponseEntity<String> handleMovieCreationException(MovieCreationException ex) {
-        System.out.println("Ni hii imetriggeriwa");
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -38,5 +37,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<String> handleReviewNotFoundException (ReviewNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

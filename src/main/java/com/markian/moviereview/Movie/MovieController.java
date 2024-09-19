@@ -2,6 +2,7 @@ package com.markian.moviereview.Movie;
 
 
 import com.markian.moviereview.Movie.Dto.MovieDto;
+import com.markian.moviereview.Movie.Dto.MovieListResponseDto;
 import com.markian.moviereview.Movie.Dto.MovieResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,9 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieResponseDto>> getAllMovies() {
-        List<MovieResponseDto> movieResponseDto = movieService.getAllMovies();
-        return new ResponseEntity<>(movieResponseDto, HttpStatus.OK);
+    public ResponseEntity<List<MovieListResponseDto>> getAllMovies() {
+        List<MovieListResponseDto> movieListResponseDtos= movieService.getAllMovies();
+        return new ResponseEntity<>(movieListResponseDtos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

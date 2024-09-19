@@ -2,14 +2,14 @@ package com.markian.moviereview.Movie.impl;
 
 import com.markian.moviereview.Exceptions.MovieNotFoundException;
 import com.markian.moviereview.Movie.Dto.MovieDto;
+import com.markian.moviereview.Movie.Dto.MovieListResponseDto;
 import com.markian.moviereview.Movie.Dto.MovieResponseDto;
 import com.markian.moviereview.Movie.Movie;
-import com.markian.moviereview.Movie.MovieMapper;
+import com.markian.moviereview.Movie.Dto.MovieMapper;
 import com.markian.moviereview.Movie.MovieRepository;
 import com.markian.moviereview.Movie.MovieService;
 import com.markian.moviereview.Exceptions.MovieCreationException;
 import jakarta.transaction.Transactional;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,11 +27,16 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
-    public List<MovieResponseDto> getAllMovies() {
+    public List<MovieListResponseDto> getAllMovies() {
         List<Movie> movies = movieRepository.findAll();
         return movies.stream()
-                .map(movieMapper::fromMovieToDto)
+                .map(movieMapper::fromMovieToDtoList)
                 .toList();
+    }
+
+    public Movie getMovieEntity(Integer id) throws MovieNotFoundException {
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new MovieNotFoundException("Movie with id " + id + " not found"));
     }
 
     @Override
@@ -39,7 +44,7 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findById(id)
                 .map(movieMapper::fromMovieToDto)
                 .orElseThrow(() ->
-                        new MovieNotFoundException("Movie with id" + id + "not found "));
+                        new MovieNotFoundException("Movie with id " + id + " not found "));
     }
 
     @Override
