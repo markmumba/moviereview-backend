@@ -88,11 +88,21 @@ public class MovieServiceImpl implements MovieService {
             existingMovie.setReleasedate(updatedMovieDto.releasedate());
         }
         if (updatedMovieDto.genres() != null) {
-            existingMovie.setGenres(updatedMovieDto.genres());
+            List<Genre> genres = updatedMovieDto.genres().stream()
+                    .map(genreListResponseDto -> {
+                        Genre genre = new Genre();
+                        genre.setId(genreListResponseDto.id());
+                        genre.setName(genreListResponseDto.name());
+                        return genre; // Return the created Genre
+                    })
+                    .toList();
+            existingMovie.setGenres(genres);
         }
+
         movieRepository.save(existingMovie);
 
     }
+
     @Transactional
     @Override
     public void updateMovieGenres(Integer movieId, List<Integer> genreIds) throws MovieNotFoundException {

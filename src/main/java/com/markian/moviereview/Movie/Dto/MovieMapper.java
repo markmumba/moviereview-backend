@@ -4,6 +4,7 @@ import com.markian.moviereview.Genre.Dto.GenreDto;
 import com.markian.moviereview.Genre.Dto.GenreListResponseDto;
 import com.markian.moviereview.Genre.Dto.GenreMapper;
 import com.markian.moviereview.Genre.Dto.GenreResponseDto;
+import com.markian.moviereview.Genre.Genre;
 import com.markian.moviereview.Movie.Movie;
 import com.markian.moviereview.Review.Dto.ReviewListResponseDto;
 import com.markian.moviereview.Review.Dto.ReviewResponseDto;
@@ -32,7 +33,16 @@ public class MovieMapper {
         movie.setDirector(movieDto.director());
         movie.setSynopsis(movieDto.synopsis());
         movie.setPosterurl(movieDto.posterurl());
-        movie.setGenres(movieDto.genres());
+        movie.setGenres(movieDto.genres()
+                .stream()
+                .map(genreListResponseDto -> {
+                    Genre genre = new Genre();
+                    genre.setId(genreListResponseDto.id());
+                    genre.setName(genreListResponseDto.name());
+                    return genre;
+                })
+                .toList());
+
         return movie;
     }
 
