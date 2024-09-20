@@ -19,5 +19,7 @@ public interface MovieService {
 
     void updateMovie(Integer id, MovieDto movieDto) throws MovieNotFoundException;
 
+    void updateMovieGenres(Integer movieId, List<Integer> genreIds) throws MovieNotFoundException;
+
     void deleteMovie(Integer id);
 }

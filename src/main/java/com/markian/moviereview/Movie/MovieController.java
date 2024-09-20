@@ -22,7 +22,7 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<MovieListResponseDto>> getAllMovies() {
-        List<MovieListResponseDto> movieListResponseDtos= movieService.getAllMovies();
+        List<MovieListResponseDto> movieListResponseDtos = movieService.getAllMovies();
         return new ResponseEntity<>(movieListResponseDtos, HttpStatus.OK);
     }
 
@@ -45,6 +45,14 @@ public class MovieController {
         movieService.updateMovie(id, movieDto);
         var message = "Movie Updated successfully";
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PutMapping("/{movieId}/genres")
+    public ResponseEntity<Void> updateMovieGenres(
+            @PathVariable Integer movieId,
+            @RequestBody List<Integer> genreIds) {
+        movieService.updateMovieGenres(movieId, genreIds);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

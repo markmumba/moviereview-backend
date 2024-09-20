@@ -1,6 +1,8 @@
 package com.markian.moviereview.Movie.impl;
 
 import com.markian.moviereview.Exceptions.MovieNotFoundException;
+import com.markian.moviereview.Genre.Genre;
+import com.markian.moviereview.Genre.GenreRepository;
 import com.markian.moviereview.Movie.Dto.MovieDto;
 import com.markian.moviereview.Movie.Dto.MovieListResponseDto;
 import com.markian.moviereview.Movie.Dto.MovieResponseDto;
@@ -12,17 +14,21 @@ import com.markian.moviereview.Exceptions.MovieCreationException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
+    private final GenreRepository genreRepository;
 
 
-    public MovieServiceImpl(MovieRepository movieRepository, MovieMapper movieMapper) {
+    public MovieServiceImpl(MovieRepository movieRepository, MovieMapper movieMapper, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -81,8 +87,20 @@ public class MovieServiceImpl implements MovieService {
         if (updatedMovieDto.releasedate() != null) {
             existingMovie.setReleasedate(updatedMovieDto.releasedate());
         }
+        if (updatedMovieDto.genres() != null) {
+            existingMovie.setGenres(updatedMovieDto.genres());
+        }
         movieRepository.save(existingMovie);
 
+    }
+    @Transactional
+    @Override
+    public void updateMovieGenres(Integer movieId, List<Integer> genreIds) throws MovieNotFoundException {
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow(() -> new MovieNotFoundException("Movie with id " + movieId + " not found"));
+        List<Genre> genres = genreRepository.findAllById(genreIds);
+        movie.setGenres(new ArrayList<>(new HashSet<>(genres)));
+        movieRepository.save(movie);
     }
 
     @Override

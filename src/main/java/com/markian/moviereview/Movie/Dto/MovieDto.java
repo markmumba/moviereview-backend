@@ -1,8 +1,10 @@
 package com.markian.moviereview.Movie.Dto;
 
+import com.markian.moviereview.Genre.Genre;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record MovieDto(
 
@@ -17,7 +19,9 @@ public record MovieDto(
 
         String synopsis,
 
-        String posterurl
+        String posterurl,
+
+        List<Genre> genres
 
 ) {
 }

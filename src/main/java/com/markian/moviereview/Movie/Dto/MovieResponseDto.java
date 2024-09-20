@@ -1,7 +1,10 @@
 package com.markian.moviereview.Movie.Dto;
 
+import com.markian.moviereview.Genre.Dto.GenreListResponseDto;
 import com.markian.moviereview.Genre.Dto.GenreResponseDto;
 import com.markian.moviereview.Genre.Genre;
+import com.markian.moviereview.Review.Dto.ReviewListResponseDto;
+import com.markian.moviereview.Review.Dto.ReviewResponseDto;
 import com.markian.moviereview.Review.Review;
 
 import java.time.LocalDateTime;
@@ -14,8 +17,8 @@ public record MovieResponseDto(
         String director,
         String synopsis,
         String posterurl,
-        List<GenreResponseDto> genres,
-        List<Review> reviews
+        List<GenreListResponseDto> genres,
+        List<ReviewListResponseDto> reviews
 ) {
 
 }

@@ -59,28 +59,26 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public void updateReview(Integer movieId, Integer reviewId, ReviewDto updatedReviewDto) throws MovieNotFoundException, ReviewNotFoundException {
-        Movie movie = movieService.getMovieEntity(movieId);
-        Review existingReview = reviewRepository.findById(reviewId)
-                .orElseThrow(() ->
-                        new ReviewNotFoundException("Review with ID " + reviewId + " not found."));
+        Review existingReview = reviewRepository.findByIdAndMovieId(reviewId, movieId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review with ID " + reviewId + " not found for movie with ID " + movieId));
+
         existingReview.setRating(updatedReviewDto.rating());
         existingReview.setReviewtext(updatedReviewDto.reviewtext());
-        existingReview.setMovie(movie);
 
         reviewRepository.save(existingReview);
     }
 
     @Override
     @Transactional
-    public void deleteReview(Integer movieId, Integer reviewId) {
-        Movie movie = movieService.getMovieEntity(movieId);
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() ->
-                        new ReviewNotFoundException("Review with ID " + reviewId + " not found."));
+    public void deleteReview(Integer movieId, Integer reviewId) throws ReviewNotFoundException {
 
-        if (!review.getMovie().getId().equals(movieId)) {
-            throw new ReviewNotFoundException("Review with ID " + reviewId + " does not belong to movie with ID " + movieId);
-        }
+        Review review = reviewRepository
+                .findByIdAndMovieId(reviewId, movieId)
+                .orElseThrow(()
+                        -> new ReviewNotFoundException("Review with ID " + reviewId + " not found for movie with ID " + movieId));
+
         reviewRepository.delete(review);
     }
+
+
 }
