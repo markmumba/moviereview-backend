@@ -78,7 +78,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() ->
                         new ReviewNotFoundException("Review with ID " + reviewId + " not found."));
 
-        if (review.getMovie().getId().equals(movieId)) {
+        if (!review.getMovie().getId().equals(movieId)) {
             throw new ReviewNotFoundException("Review with ID " + reviewId + " does not belong to movie with ID " + movieId);
         }
         reviewRepository.delete(review);

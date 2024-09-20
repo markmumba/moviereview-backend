@@ -54,6 +54,7 @@ public class ReviewController {
         return new ResponseEntity<>("Review has been updated successfully", HttpStatus.OK);
     }
 
+    @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<String> deleteReview(
 
             @PathVariable("movieId") Integer movieId,

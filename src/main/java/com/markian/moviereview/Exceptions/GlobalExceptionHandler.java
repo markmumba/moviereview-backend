@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleMovieNotFoundException(MovieNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(MovieCreationException.class)
     public ResponseEntity<String> handleMovieCreationException(MovieCreationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -40,7 +41,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ReviewNotFoundException.class)
-    public ResponseEntity<String> handleReviewNotFoundException (ReviewNotFoundException ex) {
+    public ResponseEntity<String> handleReviewNotFoundException(ReviewNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(GenreNotFoundException.class)
+    public ResponseEntity<String> handleGenreNotFoundException(MovieNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GenreCreationException.class)
+    public ResponseEntity<String> handleGenreCreationException(MovieNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

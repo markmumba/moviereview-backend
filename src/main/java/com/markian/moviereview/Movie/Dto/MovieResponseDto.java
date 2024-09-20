@@ -1,5 +1,6 @@
 package com.markian.moviereview.Movie.Dto;
 
+import com.markian.moviereview.Genre.Dto.GenreResponseDto;
 import com.markian.moviereview.Genre.Genre;
 import com.markian.moviereview.Review.Review;
 
@@ -13,7 +14,7 @@ public record MovieResponseDto(
         String director,
         String synopsis,
         String posterurl,
-        List<Genre> genres,
+        List<GenreResponseDto> genres,
         List<Review> reviews
 ) {
 
